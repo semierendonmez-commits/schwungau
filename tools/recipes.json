@@ -1,0 +1,202 @@
+{
+  "_doc": "Per-repo build overrides for build_modules.py, keyed by GitHub repo. script: run this file instead of scripts/build.sh. args/env: passed to it. commands: shell lines run in the repo root instead of any script. pre_commands: shell lines run before the script (host-side steps a script skips when it believes it is inside its container). prebuild_docker: [Dockerfile, context] run once through the docker emulator so dependencies it builds land in the shared sysroot; prebuild_product: sysroot path proving that happened. cflags: extra compiler flags (e.g. a switch the module's own sources document). package: {module_id: {dest_name: repo_path}} to assemble dist/<id>/ when a script leaves outputs elsewhere. requires: host tools needed (reported when missing). skip: reason there is nothing to build. note: free text.",
+  "athousanddetails/schwung-4keq": {
+    "script": "scripts/docker-build.sh",
+    "note": "build.sh rsyncs to a private VPS; docker-build.sh is the in-container build it runs there"
+  },
+  "athousanddetails/schwung-tablor": {
+    "script": "scripts/docker-build.sh",
+    "note": "same VPS pattern as 4keq"
+  },
+  "athousanddetails/schwung-tape-echo2": {
+    "script": "scripts/docker-build.sh",
+    "note": "same VPS pattern as 4keq"
+  },
+  "mission-minnow/beatbank": {
+    "args": [
+      "native"
+    ],
+    "package": {
+      "beatbank": {
+        "dsp.so": "build/aarch64/dsp.so",
+        "module.json": "src/module.json",
+        "help.json": "src/help.json",
+        "ui.js": "src/ui.js",
+        "ui_chain.js": "src/ui_chain.js"
+      }
+    }
+  },
+  "mission-minnow/groovebank": {
+    "args": [
+      "native"
+    ],
+    "package": {
+      "groovebank": {
+        "dsp.so": "build/aarch64/dsp.so",
+        "module.json": "src/module.json",
+        "help.json": "src/help.json",
+        "ui.js": "src/ui.js",
+        "ui_chain.js": "src/ui_chain.js"
+      }
+    }
+  },
+  "charlesvestal/schwung-airplay": {
+    "requires": [
+      "autoreconf",
+      "automake",
+      "libtool",
+      "pkg-config"
+    ],
+    "note": "builds shairport-sync"
+  },
+  "graebe/schwung-drums-practice": {
+    "requires": [
+      "cargo"
+    ]
+  },
+  "graebe/schwung-piano-practice": {
+    "requires": [
+      "cargo"
+    ]
+  },
+  "graebe/schwung-trance-gate": {
+    "requires": [
+      "cargo"
+    ]
+  },
+  "charlesvestal/schwung-sfz": {
+    "requires": [
+      "cargo",
+      "git"
+    ]
+  },
+  "DimaDake/schwung-movy": {
+    "requires": [
+      "cargo"
+    ]
+  },
+  "mestela/schwung-impressive-chords": {
+    "commands": [
+      "mkdir -p dist/impressive-chords",
+      "aarch64-linux-gnu-gcc -O2 -shared -fPIC src/impressive_chords.c -Isrc -I\"$MOVE_ANYTHING_SRC\" -o dist/impressive-chords/dsp.so -lm",
+      "cp src/module.json src/help.json src/ui.js dist/impressive-chords/ 2>/dev/null || true"
+    ],
+    "note": "repo ships sources and a prebuilt tarball, no build script"
+  },
+  "timncox/schwung-work-in": {
+    "skip": "release-only repository: the module is built from timncox/schwung-work"
+  },
+  "timncox/schwung-overwork": {
+    "skip": "release-only repository (overtake UI, no DSP source)"
+  },
+  "timncox/schwung-overwork-mix": {
+    "skip": "release-only repository (overtake UI, no DSP source)"
+  },
+  "boorch/dronage-move-release": {
+    "skip": "release-only repository, no source"
+  },
+  "broduoliviercontact-web/Schwung-Midi-Fx-branchages-Multi-Random-generator": {
+    "package": {
+      "branchage": {
+        "dsp.so": "build/aarch64/dsp.so",
+        "module.json": "src/module.json",
+        "help.json": "src/help.json",
+        "ui.js": "src/ui.js",
+        "ui_chain.js": "src/ui_chain.js"
+      }
+    }
+  },
+  "sd88me/schwung-kit-builder": {
+    "package": {
+      "kit-builder": {
+        "dsp.so": "src/dsp/dsp.so",
+        "module.json": "src/module.json",
+        "help.json": "src/help.json",
+        "ui.js": "src/ui.js",
+        "ui_chain.js": "src/ui_chain.js"
+      }
+    }
+  },
+  "wolfrenegade1976/move-anything-dragonfly-hall": {
+    "package": {
+      "dragonfly-hall": {
+        "module.json": "src/module.json",
+        "ui.js": "src/ui.js"
+      }
+    },
+    "note": "multi-stage Docker build exporting dsp.so via --output"
+  },
+  "filliformes/loopex-move": {
+    "script": "overtake-shell/scripts/build.sh",
+    "note": "overtake module; build lives in overtake-shell/"
+  },
+  "charlesvestal/schwung-surge": {
+    "requires": [
+      "cmake"
+    ],
+    "note": "large C++ build: expect several minutes per module on a laptop"
+  },
+  "charlesvestal/schwung-je8086": {
+    "requires": [
+      "cmake"
+    ],
+    "note": "large C++ build: expect several minutes per module on a laptop"
+  },
+  "charlesvestal/schwung-virus": {
+    "requires": [
+      "cmake"
+    ],
+    "note": "large C++ build: expect several minutes per module on a laptop"
+  },
+  "andree182/schwung-helm": {
+    "requires": [
+      "cmake"
+    ],
+    "note": "large C++ build: expect several minutes per module on a laptop"
+  },
+  "charlesvestal/schwung-nam": {
+    "requires": [
+      "cmake"
+    ],
+    "note": "large C++ build: expect several minutes per module on a laptop"
+  },
+  "j3threejay/move-anything-plaits": {
+    "requires": [
+      "zig"
+    ],
+    "note": "built with zig (brew install zig)"
+  },
+  "charlesvestal/schwung-stems": {
+    "note": "tool, not a chain module. Ships prebuilt aarch64-Linux libopenblas/libgfortran for its separator: on macOS those must come from Homebrew (brew install openblas) \u2014 the Move binaries cannot load."
+  },
+  "charlesvestal/schwung-keydetect": {
+    "prebuild_docker": [
+      "scripts/Dockerfile",
+      "."
+    ],
+    "requires": [
+      "cmake",
+      "make"
+    ],
+    "note": "FFTW3 + libkeyfinder are built by its Dockerfile into /opt/arm64 (mapped to the shared sysroot)",
+    "prebuild_product": "opt/arm64/include/keyfinder/keyfinder.h"
+  },
+  "legsmechanical/schwung-dr32": {
+    "pre_commands": [
+      "mkdir -p build && cp src/ui.js build/ui.js"
+    ],
+    "note": "its script stages build/ui.js only on the host-side (outside-Docker) path"
+  },
+  "filliformes/structor-move": {
+    "cflags": [
+      "-DPFFFT_SIMD_DISABLE"
+    ],
+    "note": "vendored pffft.c has an operator-precedence bug in pffft_zreorder: `(v4sf *) out + N / 2` instead of `(v4sf *)(out + N / 2)`; on any SIMD path (NEON on Move too, SSE, Apple NEON) the ordered transform writes past its output buffer. The file's own PFFFT_SIMD_DISABLE switch selects the scalar path, where v4sf is float and the expression is correct. See docs/UPSTREAM_ISSUES.md #6."
+  },
+  "filliformes/dissolver-move": {
+    "cflags": [
+      "-DPFFFT_SIMD_DISABLE"
+    ],
+    "note": "vendored pffft.c has an operator-precedence bug in pffft_zreorder: `(v4sf *) out + N / 2` instead of `(v4sf *)(out + N / 2)`; on any SIMD path (NEON on Move too, SSE, Apple NEON) the ordered transform writes past its output buffer. The file's own PFFFT_SIMD_DISABLE switch selects the scalar path, where v4sf is float and the expression is correct. See docs/UPSTREAM_ISSUES.md #6."
+  }
+}
